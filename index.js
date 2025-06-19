@@ -8,13 +8,21 @@ const schoolRoutes = require('./routes/schoolRoutes');
 dotenv.config();
 const app = express();
 
-// Middleware
+// middlewares 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.options('*', cors()); //adding if any one gvet cors 
+
+
 app.use(helmet());
 app.use(morgan('dev'));
 
-// Routes
+
+//default v1 routes starting 
 app.use('/api/v1/schools', schoolRoutes);
 
 // error 404 Handler
